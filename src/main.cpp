@@ -4,15 +4,11 @@
 int main()
 {
     int random_value = 1;
-    CircularBuffer<int, 5> buffer;
-    for (int i = 1; i < 11; i++)
-    {
-        buffer.push(i);
-    }
-
-    while (!buffer.isEmpty())
-    {
-        int value = buffer.pop();
-        cout << value << endl;
-    }
+    CircularBuffer<float, 3> buffer;
+    buffer.push(10.0);
+    buffer.push(20.0);
+    buffer.push(30.0);
+    buffer.push(40.0);
+    float avg = buffer.getAverage();
+    cout << avg << endl;
 }

@@ -15,49 +15,61 @@ private:
     int head = 0;
     int tail = 0;
     size_t count = 0;
+    T runningSum = 0;
 
 public:
     static_assert(Size > 0, "Circular Buffer size must be greater than 0");
+    // Adds value to buffer; overwrites oldest data if full
     void push(T value)
     {
         if (count == Size)
         {
-            // Logic: How do you move the tail forward and wrap it?
-            // Condition: checking if we have to wrap tail back to index 0
-
+            // Update sum by swapping the outgoing value with the new one
+            runningSum = runningSum - buffer[head] + value;
             tail = (tail + 1) % Size;
         }
         else
         {
+            runningSum += value;
             count++;
         }
 
         buffer[head] = value;
-        head = (head + 1) % Size;
+        head = (head + 1) % Size; // Wrap-around logic
     }
+
+    // Removes and returns the oldest value; returns default T if empty
     T pop()
     {
         if (count > 0)
         {
             T value = buffer[tail];
+            runningSum -= value;
+
             tail = (tail + 1) % Size;
             count--;
+
+            // Reset sum to 0 to prevent floating-point rounding errors over time
+            if (count == 0)
+                runningSum = 0;
+
             return value;
         }
-        return 0;
+        return T();
     }
-    // Return the value at current tail
-    T peek()
+
+    // Returns oldest value without removing it
+    T peek() const
     {
-        // check case if tail is empty(count > 0)
-        if (count > 0)
-        {
-            return buffer[tail];
-        }
-        else
-        {
-            return T();
-        }
+        return (count > 0) ? buffer[tail] : T();
+    }
+
+    // O(1) average calculation using the maintained running sum
+    float getAverage() const
+    {
+        if (count == 0)
+            return 0.0f;
+        return static_cast<float>(runningSum) / count;
     }
 
     size_t getCount() const { return count; }
