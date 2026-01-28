@@ -2,3 +2,5 @@
 /buffer_test
 /main.dSYM
 /test_suite
+thermostat_sim
+.gitignore

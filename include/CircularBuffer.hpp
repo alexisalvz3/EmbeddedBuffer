@@ -7,76 +7,80 @@
 
 using namespace std;
 
-template <typename T, size_t Size>
-class CircularBuffer
+namespace EmbeddedProject
 {
-private:
-    array<T, Size> buffer;
-    int head = 0;
-    int tail = 0;
-    size_t count = 0;
-    T runningSum = 0;
-
-public:
-    static_assert(Size > 0, "Circular Buffer size must be greater than 0");
-    // Adds value to buffer; overwrites oldest data if full
-    void push(T value)
+    template <typename T, size_t Size>
+    class CircularBuffer
     {
-        if (count == Size)
+    private:
+        array<T, Size> buffer;
+        int head = 0;
+        int tail = 0;
+        size_t count = 0;
+        T runningSum = 0;
+
+    public:
+        static_assert(Size > 0, "Circular Buffer size must be greater than 0");
+        // Adds value to buffer; overwrites oldest data if full
+        void push(T value)
         {
-            // Update sum by swapping the outgoing value with the new one
-            runningSum = runningSum - buffer[head] + value;
-            tail = (tail + 1) % Size;
+            if (count == Size)
+            {
+                // Update sum by swapping the outgoing value with the new one
+                runningSum = runningSum - buffer[head] + value;
+                tail = (tail + 1) % Size;
+            }
+            else
+            {
+                runningSum += value;
+                count++;
+            }
+
+            buffer[head] = value;
+            head = (head + 1) % Size; // Wrap-around logic
         }
-        else
+
+        // Removes and returns the oldest value; returns default T if empty
+        T pop()
         {
-            runningSum += value;
-            count++;
+            if (count > 0)
+            {
+                T value = buffer[tail];
+                runningSum -= value;
+
+                tail = (tail + 1) % Size;
+                count--;
+
+                // Reset sum to 0 to prevent floating-point rounding errors over time
+                if (count == 0)
+                    runningSum = 0;
+
+                return value;
+            }
+            return T();
         }
 
-        buffer[head] = value;
-        head = (head + 1) % Size; // Wrap-around logic
-    }
-
-    // Removes and returns the oldest value; returns default T if empty
-    T pop()
-    {
-        if (count > 0)
+        // Returns oldest value without removing it
+        T peek() const
         {
-            T value = buffer[tail];
-            runningSum -= value;
+            return (count > 0) ? buffer[tail] : T();
+        }
 
-            tail = (tail + 1) % Size;
-            count--;
-
-            // Reset sum to 0 to prevent floating-point rounding errors over time
+        // O(1) average calculation using the maintained running sum
+        float getAverage() const
+        {
             if (count == 0)
-                runningSum = 0;
-
-            return value;
+                return 0.0f;
+            return static_cast<float>(runningSum) / count;
         }
-        return T();
-    }
 
-    // Returns oldest value without removing it
-    T peek() const
-    {
-        return (count > 0) ? buffer[tail] : T();
-    }
+        size_t getCount() const { return count; }
 
-    // O(1) average calculation using the maintained running sum
-    float getAverage() const
-    {
-        if (count == 0)
-            return 0.0f;
-        return static_cast<float>(runningSum) / count;
-    }
+        bool isEmpty() const { return count == 0; }
 
-    size_t getCount() const { return count; }
+        bool isFull() const { return count == Size; }
+    };
 
-    bool isEmpty() const { return count == 0; }
-
-    bool isFull() const { return count == Size; }
-};
+}
 
 #endif
