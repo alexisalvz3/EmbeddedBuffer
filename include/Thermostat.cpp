@@ -1,5 +1,6 @@
 #include "CircularBuffer.hpp"
 #include <iostream>
+#include <ostream>
 
 // Using an enum class for type-safe states
 enum class ACState
@@ -12,7 +13,7 @@ enum class ACState
 class ThermostatController
 {
 private:
-    EmbeddedProject::CircularBuffer<float, 10> tempSensor;
+    EmbeddedProject::CircularBuffer<float, 3> tempSensor;
     ACState currentState = ACState::IDLE;
 
     const float UPPER_THRESHOLD = 77.0f;
@@ -27,14 +28,14 @@ public:
             currentState = ACState::IDLE;
         }
     }
-    void update(float newReading)
+    void update(float newReading, std::ostream &logStream = std::cout)
     {
         // HIGH PRIORITY CHECK: Raw Reading (ignore the buffer)
         if (newReading > 100.0f)
         {
             if (currentState != ACState::EMERGENCY)
             {
-                cout << "!!! EMERGENCY OVERHEAT: ALARM SOUNDING !!!" << std::endl;
+                logStream << "!!! EMERGENCY OVERHEAT: ALARM SOUNDING !!!" << std::endl;
                 currentState = ACState::EMERGENCY;
             }
         }
@@ -56,7 +57,7 @@ public:
             if (currentAvgTemp > UPPER_THRESHOLD)
             {
                 currentState = ACState::COOLING;
-                std::cout << "[IDLE -> COOLING] Current Avg: " << currentAvgTemp << "F. Turning AC ON." << std::endl;
+                logStream << "[IDLE -> COOLING] Current Avg: " << currentAvgTemp << "F. Turning AC ON." << std::endl;
             }
             break;
 
@@ -64,9 +65,14 @@ public:
             if (currentAvgTemp < LOWER_THRESHOLD)
             {
                 currentState = ACState::IDLE;
-                std::cout << "[COOLING -> IDLE] Current Avg: " << currentAvgTemp << "F. Room cooled. Turning AC OFF." << std::endl;
+                logStream << "[COOLING -> IDLE] Current Avg: " << currentAvgTemp << "F. Room cooled. Turning AC OFF." << std::endl;
             }
             break;
         }
+    }
+
+    ACState getState()
+    {
+        return ThermostatController::currentState;
     }
 };

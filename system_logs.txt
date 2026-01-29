@@ -1,0 +1,3 @@
+[IDLE -> COOLING] Current Avg: 77.1667F. Turning AC ON.
+[COOLING -> IDLE] Current Avg: 71.5F. Room cooled. Turning AC OFF.
+!!! EMERGENCY OVERHEAT: ALARM SOUNDING !!!
