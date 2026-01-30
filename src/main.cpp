@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <format>
+#include <limits>
 #include "../include/CircularBuffer.hpp"
 #include "../include/Thermostat.cpp"
 
@@ -22,18 +24,29 @@ int main()
     {
         std::cerr << "Error: could not open file!" << std::endl;
     }
-
     int emergencyCount = 0;
+    int minute_count = 1;
     // 2. Reads each temperature line-by-line
     while (inputFile >> temp)
     {
+        // Skip invalid entries or blank lines
+        if (inputFile.fail())
+        {
+            inputFile.clear();
+            inputFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            inputFile >> temp;
+            continue;
+        }
+
         // 3. Feeds each number into ThermostatController
-        myAC.update(temp, outFile);
+        myAC.update(temp, outFile, minute_count);
+        minute_count++;
         if (myAC.getState() == ACState::EMERGENCY)
         {
             emergencyCount++;
-            if (emergencyCount >= 3)
+            if (temp < 80.0f && emergencyCount >= 3)
             {
+                std::cout << "Technician performing safety reset..." << std::endl;
                 myAC.resetSystem();
                 emergencyCount = 0;
             }

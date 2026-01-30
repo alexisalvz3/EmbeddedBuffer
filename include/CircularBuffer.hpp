@@ -74,6 +74,14 @@ namespace EmbeddedProject
             return static_cast<float>(runningSum) / count;
         }
 
+        void clear()
+        {
+            head = 0;
+            tail = 0;
+            runningSum = 0;
+            count = 0;
+        }
+
         size_t getCount() const { return count; }
 
         bool isEmpty() const { return count == 0; }

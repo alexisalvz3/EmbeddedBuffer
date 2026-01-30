@@ -1,3 +1,43 @@
+Minute 1 | Sensor: 70 | Avg: 70 C
+Minute 2 | Sensor: 70.2 | Avg: 70.1 C
+Minute 3 | Sensor: 70.1 | Avg: 70.1 C
+Minute 4 | Sensor: 70.5 | Avg: 70.2667 C
+Minute 5 | Sensor: 71 | Avg: 70.5333 C
+Minute 6 | Sensor: 71.2 | Avg: 70.9 C
+Minute 7 | Sensor: 72 | Avg: 71.4 C
+Minute 8 | Sensor: 72.5 | Avg: 71.9 C
+Minute 9 | Sensor: 73 | Avg: 72.5 C
+Minute 10 | Sensor: 73.2 | Avg: 72.9 C
+Minute 11 | Sensor: 74.5 | Avg: 73.5667 C
+Minute 12 | Sensor: 75 | Avg: 74.2333 C
+Minute 13 | Sensor: 76 | Avg: 75.1667 C
+Minute 14 | Sensor: 76.8 | Avg: 75.9333 C
+Minute 15 | Sensor: 77.2 | Avg: 76.6667 C
+Minute 16 | Sensor: 77.5 | Avg: 77.1667 C
 [IDLE -> COOLING] Current Avg: 77.1667F. Turning AC ON.
+Minute 17 | Sensor: 78 | Avg: 77.5667 C
+Minute 18 | Sensor: 78.5 | Avg: 78 C
+Minute 19 | Sensor: 79 | Avg: 78.5 C
+Minute 20 | Sensor: 79.5 | Avg: 79 C
+Minute 21 | Sensor: 80 | Avg: 79.5 C
+Minute 22 | Sensor: 79.5 | Avg: 79.6667 C
+Minute 23 | Sensor: 78 | Avg: 79.1667 C
+Minute 24 | Sensor: 77 | Avg: 78.1667 C
+Minute 25 | Sensor: 76.5 | Avg: 77.1667 C
+Minute 26 | Sensor: 75 | Avg: 76.1667 C
+Minute 27 | Sensor: 74 | Avg: 75.1667 C
+Minute 28 | Sensor: 73.5 | Avg: 74.1667 C
+Minute 29 | Sensor: 73 | Avg: 73.5 C
+Minute 30 | Sensor: 72.5 | Avg: 73 C
+Minute 31 | Sensor: 72 | Avg: 72.5 C
+Minute 32 | Sensor: 71.5 | Avg: 72 C
+Minute 33 | Sensor: 71 | Avg: 71.5 C
 [COOLING -> IDLE] Current Avg: 71.5F. Room cooled. Turning AC OFF.
-!!! EMERGENCY OVERHEAT: ALARM SOUNDING !!!
+Minute 34 | Sensor: 70.5 | Avg: 71 C
+Minute 35 | Sensor: 70 | Avg: 70.5 C
+Minute 36 | Sensor: 69.5 | Avg: 70 C
+Minute 37 | Sensor: 69 | Avg: 69.5 C
+!!! SYSTEM LOCKED: EMERGENCY STATE !!!
+!!! SYSTEM LOCKED: EMERGENCY STATE !!!
+!!! SYSTEM LOCKED: EMERGENCY STATE !!!
+Minute 41 | Sensor: 70 | Avg: 70 C
